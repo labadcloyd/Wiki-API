@@ -24,3 +24,31 @@ app.listen(3000, ()=>{
 app.get('/', (req,res)=>{
     console.log('requesting access')
 })
+
+app.route('/')
+.get((req,res)=>{
+    article.find((err, foundArticle)=>{
+        if(!err){
+            res.send(foundArticle)
+        }else{
+            res.send(err)
+        }
+    })
+})
+.post((req,res)=>{
+    let newArticle = new article({
+        title: req.body.title,
+        content: req.body.content
+    })
+    newArticle.save();
+
+})
+.delete((req,res)=>{
+    article.deleteMany((err)=>{
+        if(!err){
+            res.send('Successfuly deleted articles')
+        }else{
+            res.send(err)
+        }
+    })
+});
