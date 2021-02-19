@@ -54,3 +54,47 @@ app.route('/articles')
             }
         })
     });
+
+app.route('/articles/:articleTitle')
+    .get((req,res)=>{
+        let title = decodeURIComponent(req.params.articleTitle)
+        article.findOne(({title:title}),(err,foundArticle)=>{
+            if(foundArticle){
+                res.send(foundArticle)
+            }else{
+                res.send(err)
+            }
+        })
+    })
+    .put((req,res)=>{
+        let title = decodeURIComponent(req.params.articleTitle);
+        let reqTitle= req.body.title;
+        let reqContent = req.body.content;
+        article.updateOne({title:title},{title:reqTitle,content:reqContent},{overwrite:true},(err)=>{
+            if(err){
+                res.send(err)
+            }else{
+                res.send('Successfuly updated article')
+            }
+        })
+    })
+    .patch((req,res)=>{
+        let title = decodeURIComponent(req.params.articleTitle);
+        article.updateOne({title:title},{$set:req.body},{overwrite:true},(err)=>{
+            if(err){
+                res.send(err)
+            }else{
+                res.send('Successfuly updated article')
+            }
+        })
+    })
+    .delete((req,res)=>{
+        let title = decodeURIComponent(req.params.articleTitle);
+        article.deleteOne({title:title},(err)=>{
+            if(err){
+                res.send(err)
+            }else{
+                res.send('Successfuly updated article')
+            }
+        })
+    });
