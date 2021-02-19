@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
+const e = require('express');
 
 const app = express();
 
@@ -40,7 +41,13 @@ app.route('/')
         title: req.body.title,
         content: req.body.content
     })
-    newArticle.save();
+    newArticle.save((err)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send('Successfuly added the article')
+        }
+    });
 
 })
 .delete((req,res)=>{
