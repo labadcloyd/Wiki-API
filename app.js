@@ -53,7 +53,8 @@ app.route('/articles')
                 res.send('Successfuly deleted the articles')
             }
         })
-    });
+    })
+;
 
 app.route('/articles/:articleTitle')
     .get((req,res)=>{
@@ -97,4 +98,5 @@ app.route('/articles/:articleTitle')
                 res.send('Successfuly updated article')
             }
         })
-    });
+    })
+;
